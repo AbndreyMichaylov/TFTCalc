@@ -23,7 +23,9 @@ namespace TFTCalc.Controllers
         [Produces("application/json")]
         public IActionResult Index()
         {
-            ComboItem resultItem;
+            ComboItem resultItem = null;
+
+            Dictionary<HeroAttribute, int> fff = new Dictionary<HeroAttribute, int>();
 
             List<Hero> heroes = new List<Hero>();
             heroes.Add(_context.Hero.Where(x => x.Name == "Гарен").First());
@@ -33,16 +35,29 @@ namespace TFTCalc.Controllers
             string result = "";
             foreach (var hero in heroes)
             {
-                result += hero.Name + " имеет аттрибуты: ";
                 var attrs = _context.Hero.Where(x => x.Name == hero.Name).Include(x => x.Attributes).ToList();
                 var b = attrs.First().Attributes;
                 foreach (var attr in b)
                 {
-                    result += attr.Name + ", ";
+                    if (fff.ContainsKey(attr))
+                    {
+                        fff[attr] += 1;
+                    }
+                    else
+                    {
+                        fff[attr] = 1;
+                    }
                 }
-                result += "\n";
             }
-            return Content(result);
+
+            foreach (var i in fff)
+            {
+                resultItem = _context.ComboItem.Where(x => x.ToComboCount == i.Value).First();
+
+                break;
+            }
+
+            return Content(resultItem.Effect);
         }
     }
 }
