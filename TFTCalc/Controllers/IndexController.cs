@@ -58,5 +58,11 @@ namespace TFTCalc.Controllers
 
             return HtmlView("index");
         }
+
+        [Route("Send")]
+        public IActionResult ReturnCombo()
+        {
+            return Json("ggrth");
+        }
     }
 }

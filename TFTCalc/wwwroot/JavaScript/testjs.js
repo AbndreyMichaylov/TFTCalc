@@ -2,5 +2,11 @@
 console.log(btn);
 
 btn.addEventListener('click', event => {
-    btn.textContent = `Click count: ${event.detail}`;
+    fetch('Send')
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            console.log(data);
+        });
 });
