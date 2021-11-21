@@ -21,43 +21,42 @@ namespace TFTCalc.Controllers
 
         [Route("/")]
         [Produces("application/json")]
-        public IActionResult Index()
+        public IActionResult Index(List<Hero> heroes = null)
         {
-            ComboItem resultItem = null;
+            //ComboItem resultItem = null;
 
-            Dictionary<HeroAttribute, int> fff = new Dictionary<HeroAttribute, int>();
+            //Dictionary<HeroAttribute, int> fff = new Dictionary<HeroAttribute, int>();
 
-            List<Hero> heroes = new List<Hero>();
-            heroes.Add(_context.Hero.Where(x => x.Name == "Гарен").First());
-            heroes.Add(_context.Hero.Where(x => x.Name == "Гарен").First());
-            heroes.Add(_context.Hero.Where(x => x.Name == "Грейвз").First());
+            //heroes.Add(_context.Hero.Where(x => x.Name == "Гарен").First());
+            //heroes.Add(_context.Hero.Where(x => x.Name == "Гарен").First());
+            //heroes.Add(_context.Hero.Where(x => x.Name == "Грейвз").First());
 
-            string result = "";
-            foreach (var hero in heroes)
-            {
-                var attrs = _context.Hero.Where(x => x.Name == hero.Name).Include(x => x.Attributes).ToList();
-                var b = attrs.First().Attributes;
-                foreach (var attr in b)
-                {
-                    if (fff.ContainsKey(attr))
-                    {
-                        fff[attr] += 1;
-                    }
-                    else
-                    {
-                        fff[attr] = 1;
-                    }
-                }
-            }
+            //string result = "";
+            //foreach (var hero in heroes)
+            //{
+            //    var attrs = _context.Hero.Where(x => x.Name == hero.Name).Include(x => x.Attributes).ToList();
+            //    var b = attrs.First().Attributes;
+            //    foreach (var attr in b)
+            //    {
+            //        if (fff.ContainsKey(attr))
+            //        {
+            //            fff[attr] += 1;
+            //        }
+            //        else
+            //        {
+            //            fff[attr] = 1;
+            //        }
+            //    }
+            //}
 
-            foreach (var i in fff)
-            {
-                resultItem = _context.ComboItem.Where(x => x.ToComboCount == i.Value).First();
+            //foreach (var i in fff)
+            //{
+            //    resultItem = _context.ComboItem.Where(x => x.ToComboCount == i.Value).First();
 
-                break;
-            }
+            //    break;
+            //}
 
-            return Content(resultItem.Effect);
+            return HtmlView("index");
         }
     }
 }
